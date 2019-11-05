@@ -7,15 +7,19 @@ Add this your HTML file
 ```html
 <script src="https://cdn.jsdelivr.net/gh/sarsamurmu/koat-databinder@{version}/dist/koat-databinder.js">
 ```
-Replace `{version}` with latest version. See releases for latest version.
+Replace `{version}` with latest version tag. See releases for latest version.
 #### Using npm
 Install it using npm
 ```
 npm i sarsamurmu/koat-databinder#1.0.0
 ```
-Use it like this
+CommonJS/ES5:
 ```js
-var DataBinder = require('koat-databinder');
+var DataBinder = require('koat-databinder')
+```
+ES6:
+```js
+import DataBinder from 'koat-databinder'
 ```
 ### Usage
 Just make an simple HTML file with placeholders.
@@ -88,7 +92,7 @@ dataBinder.set('favFruits', ['Apple', 'Mango', 'Watermelon']);
 </div>
 ```
 [CodePen Example](https://codepen.io/sarsamurmu/pen/eYYMZEj)
-  
+
 You can see your favorite fruits listed. You can do whatever, just return a HTML string, that's it.
 
 If you are setting attribute of an element using placeholder you can use `a{:variable:}` placeholder which transforms into `variable="valueOfVariable"`. Like so
