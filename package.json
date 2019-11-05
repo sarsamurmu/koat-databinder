@@ -2,7 +2,7 @@
   "name": "koat-databinder",
   "version": "1.0.0",
   "description": "Bind your HTML placeholders with Data Object",
-  "main": "index.js",
+  "main": "./dist/koat-databinder.js",
   "jsdelivr": "./dist/koat-databinder.js",
   "browser": "./dist/koat-databinder.js",
   "unpkg": "./dist/koat-databinder.js",
@@ -18,10 +18,8 @@
   "author": "Sarsa Murmu <sarsamurmu05@gmail.com>",
   "license": "MIT",
   "devDependencies": {
+    "morphdom": "^2.5.10",
     "webpack": "^4.41.2",
     "webpack-cli": "^3.3.10"
-  },
-  "dependencies": {
-    "morphdom": "^2.5.10"
   }
 }

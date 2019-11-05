@@ -3,15 +3,26 @@ Easily bind your data with HTML. HTML will Rerender when data changes and only c
 
 ### Importing
 #### Using CDN
-
+Add this your HTML file
+```html
+<script src="https://cdn.jsdelivr.net/gh/sarsamurmu/koat-databinder@{version}/dist/koat-databinder.js">
+```
+Replace `{version}` with latest version. See releases for latest version.
 #### Using npm
-
+Install it using npm
+```
+npm i sarsamurmu/koat-databinder#1.0.0
+```
+Use it like this
+```js
+var DataBinder = require('koat-databinder');
+```
 ### Usage
 Just make an simple HTML file with placeholders.
 ```html
 <div id="changeable">
-  <p>My name is {:name:}</p>
-  <p>My age is {:age:}</p>
+  <p>His name is {:name:}</p>
+  <p>His age is {:age:}</p>
 </div>
 ```
 As you can see you can define placeholders using {:data:}.
@@ -27,6 +38,8 @@ var dataBinder = new DataBinder(document.querySelector('#changeable'), {
 // Then connect with the data with element
 dataBinder.connect();
 ```
+[CodePen Example](https://codepen.io/sarsamurmu/pen/mddxPme)
+
 Now you can see your HTML page with the given data! Open your console and enter `dataBinder.age = 37`, you can see your data changed in your page without rerendering the whole DOM.
 
 There are few more methods available
@@ -41,12 +54,13 @@ dataBinder.update();
 In your HTML, you can even use inline functions with placeholder data. Like so
 ```html
 <div id="changeable">
-  <p>My name is {:name.toUpperCase():}</p>
-  <p>My age is {:age - 10:}</p>
+  <p>His name is {:name.toUpperCase():}</p>
+  <p>His age is {:age - 10:}</p>
   <!-- Assume your data includes `graduated = true` -->
-  <p>I'm {:graduated ? 'Graduated' : 'Still not graduated':}</p>
+  <p>He is {:graduated ? 'Graduated' : 'Still not graduated':}</p>
 </div>
 ```
+[CodePen Example](https://codepen.io/sarsamurmu/pen/RwwMagP)
 
 If you want more control over HTML, you can do so, you've to just return a HTML string in self executing function
 ```js
@@ -56,10 +70,10 @@ dataBinder.set('favFruits', ['Apple', 'Mango', 'Watermelon']);
 ```
 ```html
 <div id="changeable">
-  <p>My name is {:name:}</p>
-  <p>My age is {:age:}</p>
+  <p>His name is {:name:}</p>
+  <p>His age is {:age:}</p>
   <br>
-  <span>My Favorite Fruits are</span>
+  <span>His Favorite Fruits are</span>
   <ul>
     {:
       (() => {
@@ -73,6 +87,8 @@ dataBinder.set('favFruits', ['Apple', 'Mango', 'Watermelon']);
   </ul>
 </div>
 ```
+[CodePen Example](https://codepen.io/sarsamurmu/pen/eYYMZEj)
+  
 You can see your favorite fruits listed. You can do whatever, just return a HTML string, that's it.
 
 If you are setting attribute of an element using placeholder you can use `a{:variable:}` placeholder which transforms into `variable="valueOfVariable"`. Like so
@@ -86,6 +102,7 @@ dataBinder.set('src', 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a
   <img a{:src:} width="300px">
 </div>
 ```
+[CodePen Example](https://codepen.io/sarsamurmu/pen/XWWEdzy)
 
 #### Use of `set` method
 All data are saved as Proxy but direct child can't use the feature of Proxy.
