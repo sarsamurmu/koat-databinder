@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="style.css">
+  <title>DataBinder</title>
+</head>
+
+<body>
+  <h2>DataBinder</h2>
+  <p>Usage</p>
+  <pre>
+  <code>
+// Initialize
+// Base - new DataBinder(element, data);
+var injector = new DataBinder(document.querySelector('el'), {
+  data1: 'Data 1',
+  data2: 'Data 2'
+  // More Here
+});
+
+// Connect to change value when data changes
+injector.connect();
+
+// HTML will change whenever data changes
+injector.data1 = 'New Data';
+
+// Disconnect from changing data
+injector.disconnect();
+
+// When disconnected, to update placeholders
+injector.update();
+  </code>
+</pre>
+
+  <div class="dataTest">
+    <p>My name is {:name:}. My fake age is {:age + 4:}. Most nested data: {:data1.data2.data3.data4:} (injector.data1.data2.data3.data4)</p>
+  </div>
+
+  <small>Fire up your Dev Tools. Go to console and enter `<code>injector.name = 'Some Name'</code>` and see magic.</small>
+
+  <br><br><br>
+  <div class="counter">
+    <p>Sample Counter</p>
+    <button onclick='counter.count++'>Count - {:count:}</button>
+  </div>
+
+  <br>
+  <div class="list">
+    <p>Sample List</p>
+    <ul>
+      {:
+        (() => {
+          let lis = '';
+          foods.forEach((food) => {
+            lis += `<li>
+              <span>Name - ${food.name}</span><br>
+              <span>Price - ${food.price}</span>
+            </li>`
+          });
+          return lis;
+        })()
+      :}
+    </ul>
+    <button onclick='list.foods.push({ name: `Food ${list.foods.length}`, price: list.foods[list.foods.length - 1].price + 20 });'>Add Food</button>
+  </div>
+  <br><br><br>
+  <script src="../dist/koat-databinder.js" charset="utf-8"></script>
+  <script>
+    var qs = document.querySelector.bind(document);
+
+    var injector = new DataBinder(qs(".dataTest"), {
+      firstname: "Sarsa",
+      lastname: "Murmu",
+      name: function() {
+        return `${this.firstname} ${this.lastname}`;
+      },
+      age: 14,
+      data1: {
+        data2: {
+          data3: {
+            data4: 1
+          },
+          dataName: function() {
+            return `${this.firstname} ${this.lastname}`;
+          }
+        }
+      }
+    });
+
+    injector.connect();
+
+    var counter = new DataBinder(qs(".counter"), {
+      count: 1
+    });
+
+    counter.connect();
+
+    var list = new DataBinder(qs(".list"), {
+      foods: [
+        {
+          name: 'Cake',
+          price: 20,
+          datas: [1, 2, 3, 4, 5],
+          dataX: [
+            {
+              first: 'first',
+              dataY: [
+                {
+                  name: 'Haha',
+                  dataZ: [
+                    {
+                      name: 'Fred'
+                    }
+                  ]
+                },
+                {
+                  name: 'Hoho'
+                }
+              ]
+            }
+          ]
+        },
+        {
+          name: 'Burger',
+          price: 50,
+          dataX: {
+            name: 'dataX',
+            dataY: {
+              name: 'dataY',
+              dataZ: {
+                name: 'dataZ'
+              }
+            }
+          }
+        },
+        {
+          name: 'Sandwich',
+          price: 40
+        }
+      ],
+      user: {
+        name: 'Sarsa'
+      }
+    });
+
+    list.connect();
+  </script>
+</body>
+
+</html>
