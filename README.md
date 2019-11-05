@@ -129,7 +129,7 @@ dataBinder.weight = '70kg'
 
 // If you use this
 dataBinder.nestedData.weight = '70kg'
-// because you're setting the data in a nested object it will be reactive, whenever you update the data, element's will update too.
+// because you're setting the data in a nested object it will be reactive, whenever you update the data, element will update too.
 
 // To fix first case we can use this instead
 dataBinder.set('weight', '70kg');
