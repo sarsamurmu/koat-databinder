@@ -11,8 +11,12 @@ Replace `{version}` with latest version tag. See releases for latest version.
 #### Using npm
 Install it using npm
 ```
-npm i sarsamurmu/koat-databinder#1.0.0
+npm i sarsamurmu/koat-databinder#{version}
 ```
+Replace `{version}` with latest version tag.
+
+Use it -
+
 CommonJS/ES5:
 ```js
 var DataBinder = require('koat-databinder')
