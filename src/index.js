@@ -16,8 +16,10 @@ class DataBinder {
     this[dt].baseHTML = element.outerHTML
       .repeat(1)
       .trim()
-      .replace('(<(pre|script|style|textarea)[^]+?<\/\2)|(^|>)\s+|\s+(?=<|$)', '$1$3')
-      .replace(/&gt;/g, ">")
+      .replace(/(<(pre|script|style|textarea)[^]+?<\/\2)|(^|>)\s+|\s+(?=<|$)/g, '$1$3')
+      .replace(/\{:((\s|.)*?):\}/g, (match) => {
+        return match.replace(/(?<!\\)&gt;/g, '>').replace(/(?<!\\)&lt;/g, '<').replace(/(?<!\\)&amp;&amp;/g, '&&')
+      })
       .replace(/\{:(.*?):\}=[\"\']{2}/g, '{:$1:}');
     this[dt].connected = false;
 
@@ -108,30 +110,12 @@ class DataBinder {
     this[dt].getNewHTML = () => this[dt].baseHTML
       .replace(/a\{:(.*?):\}/g, (match, offset, string) => {
         var value = offset.trim();
-        var resolve = new Function(`
-          ${this[dt].letString}
-          let __scrtVal__ = '${value}';
-          try {
-            __scrtVal__ += '="'+${value}+'"'
-          } catch (e) {
-            console.warn(e.toString());
-            __scrtVal__ = ''
-          }
-          return __scrtVal__`);
+        var resolve = Function(`${this[dt].letString} let __scrtVal__ = '${value}'; try { __scrtVal__ += '="'+${value}+'"' } catch (e) { console.warn(e.toString()); __scrtVal__ = '' } return __scrtVal__`);
         return resolve();
       })
       .replace(/\{:((\s|.)*?):\}/gm, (match, offset, string) => {
         var value = offset.trim();
-        var resolve = new Function(`
-          ${this[dt].letString}
-          let __scrtVal__ = '';
-          try {
-            __scrtVal__ = ${value}
-          } catch (e) {
-            console.warn(e.toString());
-            __scrtVal__ = ''
-          }
-          return __scrtVal__`);
+        var resolve = Function(`${this[dt].letString} let __scrtVal__ = ''; try { __scrtVal__ = ${value} } catch (e) { console.warn(e.toString()); __scrtVal__ = '' } return __scrtVal__`);
         return resolve();
       });
   }
