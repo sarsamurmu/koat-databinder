@@ -16,6 +16,7 @@ class DataBinder {
     this[dt].baseHTML = element.outerHTML
       .repeat(1)
       .trim()
+      .replace('(<(pre|script|style|textarea)[^]+?<\/\2)|(^|>)\s+|\s+(?=<|$)', '$1$3')
       .replace(/&gt;/g, ">")
       .replace(/\{:(.*?):\}=[\"\']{2}/g, '{:$1:}');
     this[dt].connected = false;
@@ -33,7 +34,7 @@ class DataBinder {
     }
 
     // To proxiefy whole object
-    this[dt].proxiefy = (obj, keyPath) => {
+    this[dt].proxiefy = (obj) => {
       Object.keys(obj).forEach((key) => {
         let type = getType(obj[key]);
         if (type === types.Object) {
@@ -64,11 +65,10 @@ class DataBinder {
     }
 
     // Setup the Basic Watcher System
-    this[dt].setupWatcher = (obj, keyPath, isFirstTime) => {
+    this[dt].setupWatcher = (obj) => {
       if (obj === undefined) return;
       Object.keys(obj).forEach((key) => {
-        // In the data we recieve first, we can't use proxy, like `databinder.name = 1` it can't be proxy
-        // So, use Reflect.defineProperty instead
+        // Get proxified data if possible
         this[key] = this[dt].binderData[key] = this[dt].getProxiefied(obj[key]);
         Reflect.defineProperty(this, key, {
           enumerable: true,
@@ -117,8 +117,7 @@ class DataBinder {
             console.warn(e.toString());
             __scrtVal__ = ''
           }
-          return __scrtVal__
-          `);
+          return __scrtVal__`);
         return resolve();
       })
       .replace(/\{:((\s|.)*?):\}/gm, (match, offset, string) => {
@@ -132,8 +131,7 @@ class DataBinder {
             console.warn(e.toString());
             __scrtVal__ = ''
           }
-          return __scrtVal__
-          `);
+          return __scrtVal__`);
         return resolve();
       });
   }
