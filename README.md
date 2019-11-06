@@ -59,7 +59,7 @@ dataBinder.disconnect();
 dataBinder.update();
 ```
 
-In your HTML, you can even use inline functions with placeholder data. Like so
+In your HTML, you can even use JavaScript expressions inside of placeholder. Like so
 ```html
 <div id="changeable">
   <p>His name is {:name.toUpperCase():}</p>
