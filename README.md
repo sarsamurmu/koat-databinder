@@ -1,5 +1,5 @@
 # Koat DataBinder
-Easily bind your data with HTML. HTML will rerender when data changes in none-destructive way.
+Easily bind your data with HTML. HTML will rerender when data changes in non-destructive way.
 
 ### Importing
 #### Using CDN
