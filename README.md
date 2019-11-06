@@ -26,7 +26,7 @@ ES6:
 import DataBinder from 'koat-databinder'
 ```
 ### Usage
-Just make an simple HTML file with placeholders.
+Just make a simple HTML file with placeholders.
 ```html
 <div id="changeable">
   <p>His name is {:name:}</p>
@@ -35,7 +35,7 @@ Just make an simple HTML file with placeholders.
 ```
 As you can see you can define placeholders using {:data:}.
 
-Then in script use it like this
+Then in script, use it like this
 ```js
 // new DataBinder(element, dataObject)
 var dataBinder = new DataBinder(document.querySelector('#changeable'), {
@@ -113,7 +113,7 @@ dataBinder.set('src', 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a
 [CodePen Example](https://codepen.io/sarsamurmu/pen/XWWEdzy)
 
 #### Use of `set` method
-All data are saved as Proxy but direct child can't use the feature of Proxy.
+All data are saved as Proxy but direct child can't use the feature of Proxy. To make it reactive you have to use `set` method.
 ```js
 var dataBinder = new DataBinder(document.querySelector('#changeable'), {
   name: 'Septo Zepto',
